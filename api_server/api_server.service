@@ -1,0 +1,29 @@
+[Unit]
+Description=OCT Generators API Server
+After=network.target
+
+[Service]
+Type=simple
+# Update User to your username
+User=daniil
+# Update WorkingDirectory to your repository path
+# Example for Mac: /Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS/api_server
+# Example for Linux: /home/daniil/Generators_OCT/api_server
+WorkingDirectory=/Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS/api_server
+Environment="PATH=/usr/bin:/usr/local/bin"
+# Update PYTHONPATH to include parent directory (where virtual_scanner.py is located)
+# Example for Mac: /Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS
+# Example for Linux: /home/daniil/Generators_OCT
+Environment="PYTHONPATH=/Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS:/Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS/api_server"
+# Update ExecStart path to your repository
+# Example for Mac: /usr/bin/python3 /Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS/api_server/api_server.py
+# Example for Linux: /usr/bin/python3 /home/daniil/Generators_OCT/api_server/api_server.py
+ExecStart=/usr/bin/python3 /Users/d.mkhlnk/Documents/GitHub/OCT_Generators_IAP_RAS/api_server/api_server.py --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

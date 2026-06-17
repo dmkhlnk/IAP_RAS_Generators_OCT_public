@@ -1,0 +1,15 @@
+google-generativeai
+openai
+anthropic
+numpy
+matplotlib
+scipy
+opencv-python
+tqdm
+Pillow
+numba
+networkx
+imageio
+pandas
+perlin-noise
+torch

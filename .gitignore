@@ -1,9 +1,8 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Distribution / packaging
+*.so
 .Python
 build/
 develop-eggs/
@@ -21,36 +20,114 @@ wheels/
 .installed.cfg
 *.egg
 
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# Environment
-.env
-.venv
-env/
-venv/
-
-# Data and outputs
-/gen_*/
-/memory/
-*.dat
-*.mat
-real_scans_pool/
-
-# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
-# Logs
+# Proprietary generator (not for public release)
+Generator_v1.py
+generator_v1.py
+**/Generator_v1.py
+**/generator_v1.py
+
+# API Keys and secrets
+.env
+*.key
+*.crt
+*.pem
+*_api_key*
+!load_api_key.py
+*_secret*
+*_token*
+server.key
+server.crt
+
+# Generation results
+# Note: results/ is tracked via Git LFS (see .gitattributes)
+# Exclude temporary files from results/
+results/__pycache__/
+results/**/__pycache__/
+results/**/temp_*.py
+results/**/wrapper_script.py
+results/**/output/
+results/**/FINAL_IMPROVEMENTS.md
+gen_*/
+all_generations_*/
+panels/
+synthetic_oct_data_final/
+real_scans_png/
+real_scans_pool/
+test_*/
+
+# Cleanup scripts (temporary)
+cleanup_*.py
+cleanup_*.sh
+*_cleanup.sh
+*CLEANUP*.md
+do_cleanup.py
+execute_cleanup.sh
+remove_files.sh
+
+# Logs and temporary files
 *.log
-*.txt
-evolutions_output.log
+*.log.*
+*.out
+*.err
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+api_scans/
+
+# History and run data
+run_history/
+evolution_memory.jsonl
+best_version.txt
+timestamp.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# System files
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+
+# Large data files
+*.mat
+*.dat
+*.h5
+*.hdf5
+
+# Documentation backups
+*.md.backup
+*.md.bak
+
+# Script backups
+*.sh.backup
+*.sh.bak
+*.py.backup
+*.py.bak
+
+# PDF files (research papers - too large for git)
+*.pdf
+
+# Configuration files with sensitive data
+configuration_local.ini
+config_local.py
+

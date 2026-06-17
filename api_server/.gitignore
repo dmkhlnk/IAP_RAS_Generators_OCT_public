@@ -1,0 +1,10 @@
+# Temporary files
+api_temp/
+*.pyc
+__pycache__/
+*.log
+
+# Environment
+.env
+.env.local
+

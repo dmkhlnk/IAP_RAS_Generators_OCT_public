@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCT Generators - Virtual Scanner</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>OCT Generators</h1>
+            <p>Virtual Scanner - Process Scatterers to OCT Scans</p>
+            <button id="logoutButton" class="logout-button" style="display: none;">Logout</button>
+        </div>
+        
+        <div class="content">
+            <div class="upload-section" id="uploadSection">
+                <h2>Upload Scatterers File</h2>
+                <p class="upload-hint">Select or drag & drop a .dat file</p>
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" class="file-input" accept=".dat">
+                    <label for="fileInput" class="file-button">Choose File</label>
+                </div>
+                <div class="file-name" id="fileName"></div>
+                <button class="process-button" id="processButton" disabled>Process File</button>
+            </div>
+            
+            <div class="status" id="status"></div>
+            
+            <div class="results" id="results">
+                <h2>Results</h2>
+                <div class="image-container" id="imageContainer"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>OCT Generators API v1.0 | <a href="/docs" target="_blank">API Documentation</a></p>
+        </div>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>
+

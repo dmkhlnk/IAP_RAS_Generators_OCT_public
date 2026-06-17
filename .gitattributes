@@ -1,0 +1,5 @@
+results/**/*.dat filter=lfs diff=lfs merge=lfs -text
+results/**/*.png filter=lfs diff=lfs merge=lfs -text
+results/**/*.py filter=lfs diff=lfs merge=lfs -text
+Structural*holes/**/*.dat filter=lfs diff=lfs merge=lfs -text
+Structural*holes/**/*.png filter=lfs diff=lfs merge=lfs -text

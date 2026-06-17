@@ -1,4 +1,4 @@
-# Project ALPHA EVOLVE - Python Dependencies
+# OCT Generators - Python Dependencies
 
 # Core scientific computing
 numpy>=1.21.0
@@ -27,9 +27,15 @@ networkx>=2.6.0
 tqdm>=4.62.0
 perlin-noise>=1.12
 
-# Jupyter notebook support (optional)
+# Jupyter notebook support (optional, for interactive pipeline)
 jupyter>=1.0.0
 ipykernel>=6.0.0
 
 # Development and testing (optional)
 pytest>=6.2.0
+
+# API Server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+starlette>=0.27.0

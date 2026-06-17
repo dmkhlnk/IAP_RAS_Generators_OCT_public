@@ -1,146 +1,317 @@
-# IAP RAS Generators - OCT Synthetic Image Generation
+# OCT Generators - Synthetic Optical Coherence Tomography Scan Generation System
 
-**A scientific approach to generating synthetic Optical Coherence Tomography (OCT) skin scans using evolutionary algorithms and AI-driven optimization.**
+## Overview
 
-## Project Overview
+This repository contains a complete system for generating high-quality synthetic Optical Coherence Tomography (OCT) scans of human skin using Monte Carlo light transport simulation, morphological tissue modeling, and AI-driven validation. The system implements an evolutionary multi-agent architecture that autonomously improves synthetic data quality through iterative refinement.
 
-This project implements an autonomous system for generating realistic synthetic OCT images of human skin. It combines:
+## System Architecture
 
-- **Physics-based OCT simulation** - Monte Carlo light propagation through skin tissue
-- **Evolutionary optimization** - Iterative parameter refinement guided by AI feedback
-- **Scientific grounding** - Integration of dermatological knowledge and optical theory
-- **Advanced metrics** - Assessment of convergence and scan quality using literature-based metrics
+### Core Components
 
-## Key Features
+1. **Generator Module** (`Generator_v1.py`): Creates synthetic tissue structures with anatomically accurate parameters
+2. **Virtual Scanner** (`virtual_scanner.py`): Simulates OCT physics to convert scatterers into realistic OCT images
+3. **AI Validator** (`enhanced_validator.py`): Evaluates scan realism using Gemini AI vision analysis
+4. **Evolution Engine** (`alpha_evolve_final.py`): Orchestrates autonomous improvement cycles with rollback protection
+5. **Scientific Knowledge Processor** (`scientific_knowledge_processor.py`): Integrates knowledge from research literature
+6. **Multi-Agent System** (`alpha_evolve_agents/`): Implements generator and validator agents with self-evolution capabilities
 
-### 1. **Advanced OCT Metrics** (`advanced_oct_metrics.py`)
-- **MS-SSIM** (Multi-Scale Structural Similarity) for image quality assessment
-- **SNR/CNR** (Signal-to-Noise & Contrast-to-Noise Ratios) for OCT-specific metrics
-- Based on scientific literature (Wang 2003, Weill Cornell OCT research)
+### Key Features
 
-### 2. **Convergence Analysis** (`convergence_metrics.py`)
-- Tracks evolution metrics across generations
-- Detects parameter correlations and interdependencies
-- Provides trend analysis and convergence indicators
-- Generates visualization plots of convergence progress
-- Produces actionable recommendations for next iterations
+- **Evolutionary Algorithm**: Autonomous improvement across generations with automatic rollback
+- **AI Validation**: Expert-level analysis powered by Google Gemini API
+- **Scientific Grounding**: Based on Monte Carlo light transport and OCT morphology research
+- **High Performance**: Generates 170,000+ scatterers in 30 seconds
+- **Comprehensive Metrics**: SSIM, MS-SSIM, SNR, CNR, and MMD quality metrics
+- **Multi-Agent Architecture**: Self-improving agents that can modify their own prompts and parameters
 
-### 3. **Validation Framework** (`validator.py`)
-- Panel-based assessment combining synthetic and real scans
-- AI-powered analysis using multimodal LLM capabilities
-- Focused on physics-relevant features (stratum corneum brightness, tissue contrast)
-- Generates structured JSON recommendations for parameter adjustments
+## System Requirements
 
-### 4. **Tissue Property Library** (`SkinDBLib.py`)
-- Ground-truth tissue segmentation and mask generation
-- Dice score calculations for segmentation quality
-- Support for MATLAB-based skin database integration
-- Morphological analysis of tissue structures
+### Software Requirements
+
+- Python 3.9 or higher
+- pip package manager
+- Git (for repository cloning)
+
+### Hardware Requirements
+
+- Minimum 8 GB RAM (16 GB recommended)
+- Multi-core CPU (parallel processing supported)
+- 10 GB free disk space for generation results
+- GPU optional (CPU processing works fine)
+
+### API Requirements
+
+- Google Gemini API key (required for AI validation)
+  - Get your API key from: https://aistudio.google.com/app/apikey
 
 ## Installation
 
-### Requirements
-- Python 3.8+
-- Key dependencies (see `requirements.txt`):
-  - numpy, scipy, matplotlib
-  - Pillow, OpenCV, imageio
-  - scikit-image
-  - google-generativeai (for AI validation)
-  - pandas, networkx
-
-### Setup
+### Step 1: Clone Repository
 
 ```bash
-# Clone repository
-git clone https://github.com/dmkhlnk/IAP_RAS_Generators_OCT_public.git
-cd IAP_RAS_Generators_OCT_public
+git clone git@github.com:dmkhlnk/OCT_Generators_IAP_RAS.git
+cd OCT_Generators_IAP_RAS
+```
 
-# Install dependencies
+### Step 2: Install Dependencies
+
+```bash
 pip install -r requirements.txt
-
-# Set up API key for AI validation (optional)
-export GEMINI_API_KEY="your-api-key-here"
 ```
 
-## Usage
+### Step 3: Configure API Key
 
-### Computing Image Quality Metrics
+You have three options to configure your API key:
 
-```python
-from advanced_oct_metrics import AdvancedOCTMetrics
-import cv2
+**Option 1: Using setup script (Recommended)**
 
-metrics_calc = AdvancedOCTMetrics()
-
-# Load images
-generated = cv2.imread("synthetic.png", cv2.IMREAD_GRAYSCALE)
-real = cv2.imread("real.png", cv2.IMREAD_GRAYSCALE)
-
-# Calculate metrics
-results = metrics_calc.calculate_all_metrics(
-    generated, 
-    [real],
-    comparison_scan=real
-)
+```bash
+./setup_api_key.sh
 ```
 
-### Analyzing Convergence
+**Option 2: Manual .env file creation**
 
-```python
-from convergence_metrics import ConvergenceMetrics
-from pathlib import Path
+```bash
+cp env.example .env
+# Edit .env and add your API key: GEMINI_API_KEY=your_key_here
+```
 
-metrics = ConvergenceMetrics(Path("."))
-report = metrics.generate_convergence_report()
-plot_path = metrics.plot_convergence()
+**Option 3: Environment variable**
+
+```bash
+export GEMINI_API_KEY='your_api_key_here'
+```
+
+The .env file is automatically ignored by git and will not be committed to the repository.
+
+### Step 4: Verify Installation
+
+Test your API key configuration:
+
+```bash
+python3 load_api_key.py
+```
+
+## Quick Start
+
+### Basic Usage - Single Generation
+
+Run a single generation cycle:
+
+```bash
+python3 alpha_evolve_final.py --generation 1
+```
+
+### Multi-Agent Pipeline
+
+For the full multi-agent system with interactive evolution:
+
+```bash
+cd alpha_evolve_agents
+jupyter notebook pipeline_notebook.ipynb
+```
+
+Or run directly:
+
+```bash
+cd alpha_evolve_agents
+python3 pipeline_orchestrator.py
 ```
 
 ## Project Structure
 
 ```
-IAP_RAS_Generators_OCT_public/
-├── README.md                      # Documentation
-├── requirements.txt               # Python dependencies
-├── advanced_oct_metrics.py        # Quality metrics (MS-SSIM, SNR, MMD)
-├── convergence_metrics.py         # Convergence tracking & analysis
-├── validator.py                   # AI-powered validation
-└── SkinDBLib.py                   # Tissue properties & segmentation
+OCT_Generators_IAP_RAS/
+├── Generator_v1.py                    # Main tissue generator
+├── virtual_scanner.py                  # OCT simulation engine
+├── enhanced_validator.py               # AI validation system
+├── alpha_evolve_final.py               # Evolutionary engine
+├── scientific_knowledge_processor.py   # Scientific knowledge integration
+├── convergence_metrics.py              # Performance tracking
+├── advanced_oct_metrics.py             # Quality metrics calculator
+├── load_api_key.py                     # API key management utility
+├── setup_api_key.sh                    # API key setup script
+├── SkinDBLib.py                        # Skin database library
+├── Configuration.ini                    # Scanner configuration
+├── requirements.txt                    # Python dependencies
+├── env.example                         # Environment variables template
+├── agent_configs/                      # Agent prompt configurations
+│   ├── validator_prompt_config.json
+│   └── configurator_prompt_config.json
+└── alpha_evolve_agents/                # Multi-agent system
+    ├── pipeline_orchestrator.py        # Main orchestrator
+    ├── agent_generator.py              # Generator agent
+    ├── agent_validator.py              # Validator agent
+    ├── config_skin_regions.py          # Anatomical parameters
+    ├── main_oct_generator_corrected.py # OCT generator
+    ├── OCTPhantomVirtualScanning.py    # Virtual scanner
+    └── pipeline_notebook.ipynb         # Interactive interface
 ```
+
+## Usage Examples
+
+### Running Evolution Cycle
+
+```bash
+# Run generation 1
+python3 alpha_evolve_final.py --generation 1
+
+# Run generation 2 (uses generation 1 as parent)
+python3 alpha_evolve_final.py --generation 2
+```
+
+### Output Structure
+
+All generation results are saved in the `results/` directory. Each generation creates a subdirectory with the following structure:
+
+```
+results/
+└── gen_XX/
+    ├── scatterers/              # Generated light scatterers (.dat files)
+    ├── scans/                   # Synthetic OCT images (.png files)
+    ├── reports/                 # AI validation reports (.json files)
+    │   ├── validation_results.json
+    │   ├── recommendations.json
+    │   └── comparison_panel_labeled_*.png
+    └── generator_vXX.py         # Evolved generator code
+```
+
+The `results/` directory is automatically ignored by git (.gitignore) to keep the repository clean.
 
 ## Scientific Foundation
 
-This project is grounded in peer-reviewed research:
+### Research Integration
 
-- **Wang et al. (2003)** - Multi-scale structural similarity index
-- **Gretton et al. (2012)** - Kernel two-sample testing (MMD)
-- **Weill Cornell Medicine** - OCT diagnostic methodology
-- **Monte Carlo light transport** - Physics-based simulation
+The system integrates knowledge from:
 
-## Key Metrics Explained
+- **Monte Carlo Light Transport**: Principles for accurate photon simulation
+- **OCT Morphology Research**: Tissue optical properties and structures
+- **Real OCT Database**: Reference scans for validation
 
-### MS-SSIM (Multi-Scale SSIM)
-- Measures perceptual similarity across multiple scales
-- Range: 0-1 (higher is better)
-- Used for visual quality assessment
+### AI Analysis Capabilities
 
-### OCT-Specific SNR
-- Signal: Stratum corneum or bright tissue regions
-- Noise: Background or dark regions
-- Calculated in both linear and dB scales
+- Synthetic scan identification with confidence levels
+- Quality scoring on 0-100 difference scale
+- Degradation detection with automatic rollback
+- Parameter optimization recommendations
+- Multi-model validation for robustness
 
-### Convergence Score
-- Composite metric from 0-1 indicating proximity to target quality
-- Incorporates current score and trend
-- Estimates generations needed to convergence
+## Performance Metrics
+
+### Execution Times (typical)
+
+- Full generation cycle: 3-5 minutes
+- Scatterer generation: 10-30 seconds
+- Virtual OCT scanning: 45-60 seconds (975 A-scans)
+- AI validation: 15-30 seconds
+
+### Resource Usage
+
+- Memory: 2-4 GB RAM per generation
+- CPU: Multi-core parallel processing
+- Storage: 50-100 MB per generation
+
+## Configuration
+
+### Environment Variables
+
+The system supports the following environment variables (set in .env file):
+
+- `GEMINI_API_KEY`: Required. Your Google Gemini API key
+- `GOOGLE_API_KEY`: Alternative name for API key (for compatibility)
+
+### Generator Parameters
+
+Anatomical parameters are configured in:
+- `alpha_evolve_agents/config_skin_regions.py` (for multi-agent system)
+- Generator code files (for evolutionary system)
+
+## Troubleshooting
+
+### API Key Issues
+
+If you encounter API key errors:
+
+1. Verify your API key is set: `python3 load_api_key.py`
+2. Check .env file exists and contains valid key
+3. Ensure API key has proper permissions in Google AI Studio
+
+### Import Errors
+
+If you see import errors:
+
+1. Verify all dependencies are installed: `pip install -r requirements.txt`
+2. Check Python version: `python3 --version` (should be 3.9+)
+3. Ensure you're in the correct directory
+
+### Performance Issues
+
+For slow generation:
+
+1. Reduce number of scatterers in generator configuration
+2. Use fewer parallel processes
+3. Check available system memory
+
+## Limitations and Known Issues
+
+### Current Limitations
+
+1. System operates in HITL (Human-In-The-Loop) mode and depends on initial parameter configuration
+2. After approximately 10-12 iterations, agents may cycle through parameter values without improvement, requiring human intervention
+3. Quality depends on starting configuration parameters
+4. Requires manual intervention to break out of parameter cycling loops
+
+### Planned Improvements
+
+Future development will focus on:
+- Meta-learning approaches to reduce dependency on initial parameters
+- Evolutionary algorithms to prevent parameter cycling
+- Enhanced orchestration for increased autonomy
+- Automatic detection and recovery from cycling states
+
+## Contributing
+
+When contributing to this project:
+
+1. Never commit API keys or sensitive information
+2. Ensure .env file is in .gitignore
+3. Test changes with `python3 load_api_key.py` before committing
+4. Follow existing code style and documentation patterns
+
+## Citation
+
+If you use this system in your research, please cite:
+
+- Monte Carlo light transport principles
+- OCT morphology research papers
+- This repository
 
 ## License
 
-MIT License
+See LICENSE file for details.
 
-## Contact & Support
+## Authors
 
-For questions or issues, please open an issue on GitHub.
+**IAP RAS** (Institute of Applied Physics, Russian Academy of Sciences)
 
----
+### Developers
 
-**Note**: This is a research implementation. For production use in clinical applications, additional validation may be required.
+- Daniil S. Mikhailenko<sup>a,b</sup>
+- Alexander L. Matveyev<sup>a</sup>
+- Lev A. Matveev<sup>a</sup>
+- Denis A. Nikoshin<sup>a,b</sup>
+- Alexander A. Sovetsky<sup>a</sup>
+- Vladimir Y. Zaitsev<sup>a</sup>
+
+<sup>a</sup> Institute of Applied Physics, Russian Academy of Sciences  
+<sup>b</sup> Higher School of Economics
+
+## Support
+
+For issues and questions:
+
+1. Check troubleshooting section above
+2. Review documentation in project files
+3. Verify API key configuration
+4. Check system requirements
+

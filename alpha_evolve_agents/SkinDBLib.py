@@ -4,7 +4,7 @@ import os
 import sys
 import numpy as np
 import cv2 # Используется для VideoWriter
-#import torch
+import torch
 import scipy.io
 import scipy.ndimage as ndimage
 from skimage.measure import label, regionprops

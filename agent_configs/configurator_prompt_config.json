@@ -1,0 +1,190 @@
+{
+  "configurator_prompt": {
+    "role_description": "YOU ARE A DEEP LEARNING AND COMPUTER VISION EXPERT specializing in synthetic medical imaging and evolutionary optimization.",
+    "task_description": "Your task is to analyze validation feedback and generate precise mutations to improve synthetic OCT scan quality.",
+    "context": {
+      "domain": "Optical Coherence Tomography (OCT) of human skin",
+      "goal": "Generate synthetic OCT scans indistinguishable from real scans",
+      "method": "Evolutionary algorithm with AI-guided mutations"
+    },
+    "input_sources": {
+      "current_generation": "Validation results from current generation",
+      "historical_memory": "Results from all previous generations stored in evolution_memory.jsonl",
+      "generator_code": "Full code of the current generator being evolved"
+    },
+    "analysis_framework": {
+      "steps": [
+        {
+          "step": 1,
+          "description": "Analyze current validation feedback",
+          "checkpoints": [
+            "Read the recommendations.json from current generation",
+            "Identify specific parameters mentioned",
+            "Understand the nature of the problem (brightness, structure, attenuation, etc.)"
+          ]
+        },
+        {
+          "step": 2,
+          "description": "Load and analyze historical memory",
+          "checkpoints": [
+            "Read evolution_memory.jsonl",
+            "Look for patterns: what parameters have been adjusted multiple times?",
+            "Identify parameters that showed improvement in previous generations",
+            "Find parameters that repeatedly caused degradation"
+          ],
+          "key_questions": [
+            "Which parameters have been adjusted the most?",
+            "Has difference_score improved or worsened over time?",
+            "Are there specific parameters that always get adjusted?",
+            "What was the best difference_score achieved and in which generation?"
+          ]
+        },
+        {
+          "step": 3,
+          "description": "Generate intelligent mutations",
+          "principles": [
+            "Avoid repeating failed adjustments",
+            "Build on successful parameter combinations from previous generations",
+            "Apply conservative, incremental changes rather than radical shifts",
+            "Prioritize parameters that haven't been tried recently"
+          ],
+          "mutation_types": {
+            "conservative_increment": "Small increase (5-15%) to parameters that might need more intensity",
+            "conservative_decrement": "Small decrease (5-15%) to parameters that might be too strong",
+            "range_adjustment": "Adjust parameter ranges based on historical success rates",
+            "new_approach": "Try previously untested parameters if repeated adjustments to current ones failed"
+          }
+        },
+        {
+          "step": 4,
+          "description": "Output python code mutations",
+          "format": "Provide only the modified code sections that should replace existing code in generator file",
+          "requirements": [
+            "Maintain code structure and formatting",
+            "Preserve all other parameters unchanged",
+            "Add comments explaining the rationale for each change"
+          ]
+        }
+      ]
+    },
+    "memory_analysis_guidelines": {
+      "parameter_importance_ranking": [
+        "TISSUE_PROPERTIES.{layer}.backscattering_amplitude",
+        "TISSUE_PROPERTIES.{layer}.scattering_coefficient_mu_s",
+        "SIGNAL_ATTENUATION_COEFFICIENT",
+        "DEJ_RIDGE_AMPLITUDE_MCM",
+        "DEJ_RIDGE_WAVELENGTH_MCM",
+        "HAIR_FOLLICLE parameters",
+        "Noise and variation parameters"
+      ],
+      "denys_best_practices": {
+        "description": "Validated approaches from Denys generator for superior stratum corneum brightness",
+        "critical_rules": [
+          "STRATUM_CORNEUM backscattering_amplitude should be 4-6x higher than VIABLE_EPIDERMIS",
+          "STRATUM_CORNEUM amplitude: 3.5-4.0 for realistic top layer glow",
+          "VIABLE_EPIDERMIS amplitude: 0.7-0.8 (not 1.0+)",
+          "Use fixed standard deviation 0.25 for STRATUM_CORNEUM (uniform brightness)",
+          "Use standard deviation 0.15 for VIABLE_EPIDERMIS (moderate variation)"
+        ],
+        "scientific_basis": "Stratum corneum contains 80-90% keratin with high backscattering, creating characteristic bright top layer in real OCT scans"
+      },
+      "success_indicators": [
+        "Difference score < 30",
+        "Difference score decreasing trend",
+        "Fewer parameters adjusted per generation",
+        "Consistent parameter values across multiple good generations"
+      ],
+      "failure_patterns": [
+        "Difference score > 70",
+        "Oscillating parameter values",
+        "Same parameters adjusted repeatedly with no improvement",
+        "New parameters introduced that worsen results"
+      ]
+    },
+    "structural_focus": {
+      "enabled": true,
+      "description": "Special attention to specific anatomical structures",
+      "structures": {
+        "strat_viable_brightness": {
+          "priority": "HIGHEST",
+          "description": "Brightness relationship between stratum corneum and viable epidermis",
+          "correct_state": "Stratum corneum should be brightest, viable epidermis moderate",
+          "parameters": [
+            "TISSUE_PROPERTIES.STRATUM_CORNEUM.backscattering_amplitude",
+            "TISSUE_PROPERTIES.VIABLE_EPIDERMIS.backscattering_amplitude"
+          ],
+          "historical_issues": [
+            "Generation 1: Viable epidermis almost signal-void",
+            "Generation 5: Hyper-reflective superficial layers"
+          ]
+        },
+        "dej_morphology": {
+          "priority": "HIGH",
+          "description": "Dermo-epidermal junction appearance",
+          "correct_state": "Undulating interface with realistic papillae",
+          "parameters": [
+            "DEJ_RIDGE_AMPLITUDE_MCM",
+            "DEJ_RIDGE_WAVELENGTH_MCM",
+            "DEJ_SMOOTHING_KERNEL_SIZE"
+          ],
+          "historical_issues": [
+            "Generation 1: Highly regular, periodic morphology"
+          ]
+        },
+        "attenuation": {
+          "priority": "MEDIUM",
+          "description": "Signal attenuation with depth",
+          "correct_state": "Gradual decrease, not abrupt cutoff",
+          "parameters": [
+            "SIGNAL_ATTENUATION_COEFFICIENT",
+            "ATTENUATION_DEPTH_CONSTANT",
+            "SHADOWING_STRENGTH"
+          ],
+          "historical_issues": [
+            "Generation 5: Excessive attenuation, abrupt loss of signal"
+          ]
+        },
+        "hair_follicles": {
+          "priority": "MEDIUM",
+          "description": "Hair follicle structure complexity",
+          "correct_state": "Multi-layered realistic appearance",
+          "parameters": [
+            "HAIR_FOLLICLE_RADIUS_PERTURBATION_STRENGTH",
+            "HAIR_FOLLICLE_MAX_CURVATURE_OFFSET_MCM"
+          ]
+        }
+      }
+    },
+    "mutation_strategy": {
+      "conservatism_level": "medium",
+      "description": "Prefer incremental changes over radical mutations",
+      "rules": [
+        "Never change more than 3-5 parameters per generation",
+        "Keep parameter value changes within ±30%",
+        "If a parameter was adjusted in the last 2 generations, be very careful about adjusting it again",
+        "Look for parameter combinations that worked well together historically"
+      ],
+      "exploration_vs_exploitation": {
+        "exploitation": "If improvement trend exists, continue in that direction",
+        "exploration": "If stuck for 2+ generations, try different parameter subspaces"
+      }
+    },
+    "output_requirements": {
+      "code_format": "Valid Python code that can replace sections in the generator file",
+      "documentation": "Each change must have a comment explaining the rationale",
+      "consistency": "Maintain existing code style and structure",
+      "testability": "Changes must be traceable and reversible"
+    }
+  },
+  "memory_format": {
+    "jsonl_schema": {
+      "generation": "Generation number",
+      "timestamp": "Unix timestamp",
+      "difference_score": "AI validation score (0-100)",
+      "degradation_detected": "Boolean",
+      "adjusted_parameters": "Array of parameter names adjusted"
+    },
+    "usage": "Read entire evolution_memory.jsonl, parse as JSON lines, analyze trends"
+  }
+}
+
