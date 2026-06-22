@@ -39,6 +39,8 @@ Generator_v1.py
 generator_v1.py
 **/Generator_v1.py
 **/generator_v1.py
+virtual_scanner.py
+**/virtual_scanner.py
 
 # API Keys and secrets
 .env
