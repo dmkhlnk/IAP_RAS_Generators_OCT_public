@@ -269,14 +269,6 @@ Future development will focus on:
 - Enhanced orchestration for increased autonomy
 - Automatic detection and recovery from cycling states
 
-## Contributing
-
-When contributing to this project:
-
-1. Never commit API keys or sensitive information
-2. Ensure .env file is in .gitignore
-3. Test changes with `python3 load_api_key.py` before committing
-4. Follow existing code style and documentation patterns
 
 ## Citation
 
@@ -305,7 +297,11 @@ See LICENSE file for details.
 
 <sup>a</sup> Institute of Applied Physics, Russian Academy of Sciences  
 <sup>b</sup> Higher School of Economics
+## Acknowledgments 
 
+Funding
+This project realised and published with the support of the Russian Science Foundation (RSF):
+RSF Grant № 25-12-20032: "New Approaches to the Development of Algorithms for Analyzing OCT Scans: Modification and Optimization of Large Models Based on Physical Principles and Conditions of OCT Signal Formation" (https://rscf.ru/en/project/25-12-20032/)
 ## Support
 
 For issues and questions:
